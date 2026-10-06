@@ -1,0 +1,22 @@
+# Environments
+**/venv/
+**/env/
+**/.venv/
+
+# Byte-compiled / optimized files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Large archive files
+**/*.tar.gz
+**/*.tar
+
+# SQLite databases created at runtime
+**/records.db
+**/predictions.db
+
+# OS files
+.DS_Store
+Thumbs.db
+*.o
