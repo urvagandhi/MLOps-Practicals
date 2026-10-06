@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Prediction History</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+        <header>
+            <h1>Prediction History</h1>
+            <p>Stored records from SQLite Database</p>
+        </header>
+        <div class="content">
+            {% if records and records|length > 0 %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Sepal L</th>
+                        <th>Sepal W</th>
+                        <th>Petal L</th>
+                        <th>Petal W</th>
+                        <th>Prediction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rec in records %}
+                    <tr>
+                        <td>{{ rec.id }}</td>
+                        <td>{{ rec.a1 }}</td>
+                        <td>{{ rec.a2 }}</td>
+                        <td>{{ rec.a3 }}</td>
+                        <td>{{ rec.a4 }}</td>
+                        <td><strong>{{ rec.prediction }}</strong></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p style="text-align: center; color: #7f8c8d; margin-bottom: 20px;">No prediction records found.</p>
+            {% endif %}
+            <p style="text-align: center;">
+                <a href="/">Back to Prediction</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

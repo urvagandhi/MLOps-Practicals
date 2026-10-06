@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  dbapp:
+    build: ./dbapp
+    container_name: dbcnt_cmp_vol
+    volumes:
+      - iris_db_data:/app/data
+    restart: always
+
+  webapp:
+    build: ./webapp
+    container_name: webcnt_cmp_vol
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_SERVICE_URL=http://dbapp:5000
+    depends_on:
+      - dbapp
+    restart: always
+
+volumes:
+  iris_db_data:
