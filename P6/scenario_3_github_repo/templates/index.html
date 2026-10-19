@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Iris DataSet Prediction App</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Iris Flower Classification</h1>
+            <p>A simple web app to predict Iris flower species based on sepal and petal measurements.</p>
+        </header>
+        <div class="content">
+            <form action="/predict" method="post">
+                <div class="form-group">
+                    <label for="a1">Sepal Length (cm):</label>
+                    <input type="number" id="a1" name="a1" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="a2">Sepal Width (cm):</label>
+                    <input type="number" id="a2" name="a2" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="a3">Petal Length (cm):</label>
+                    <input type="number" id="a3" name="a3" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="a4">Petal Width (cm):</label>
+                    <input type="number" id="a4" name="a4" step="0.1" required>
+                </div>
+                <button type="submit">Predict Species</button>
+            </form>
+            <p style="text-align: center; margin-top: 18px;">
+                <a href="/records">View Prediction History</a>
+            </p>
+        </div>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Prediction Result Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h2>Prediction Result</h2>
+            <p>The predicted species is: <strong>{{ prediction }}</strong></p>
+            <p style="font-size: 14px; color: #27ae60; margin-bottom: 20px;">✓ Record saved to database!</p>
+            <a href="/">Make another prediction</a>
+            <br><br>
+            <a href="/records">View Prediction History</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+pipeline {
+    agent {
+        node {
+            label 'local'
+            customWorkspace '/Users/urvagandhi/Developer/College/Semester-7/MLOPS/MLOps-Practicals/P6/scenario_1_local_folder'
+        }
+    }
+    environment {
+        // macOS (Homebrew), Linux, and Windows PATH support
+        PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+    }
+    stages {
+        /*
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-username/iris_project.git'
+            }
+        }
+        */
+        stage('Show Workspace') {
+            steps {
+                // bat 'cd'   // Windows
+                sh 'pwd'      // macOS / Linux
+            }
+        }
+        stage('Build Images') {
+            steps {
+                // bat 'docker compose build' // Windows
+                sh 'docker compose build'      // macOS / Linux
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                // bat 'docker run --rm demo1_jenkins_as_container_webapp pytest || echo "No tests found"' // Windows
+                sh 'docker run --rm demo1_jenkins_as_container_webapp pytest || echo "No tests found"'      // macOS / Linux
+            }
+        }
+        stage('Deploy Containers') {
+            steps {
+                // bat 'docker compose up -d' // Windows
+                sh 'docker compose up -d'      // macOS / Linux
+            }
+        }
+    }
+}
