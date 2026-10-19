@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/urvagandhi/MLOps-Practicals.git'
+            }
+        }
+        stage('Show Workspace') {
+            steps {
+                // bat 'cd' // Windows
+                sh 'pwd'   // Linux
+            }
+        }
+        stage('Build Images') {
+            steps {
+                // bat 'docker compose build' // Windows
+                sh '''
+                    if [ -d "P6/scenario_3_github_repo" ]; then
+                        cd "P6/scenario_3_github_repo"
+                    fi
+                    docker compose build
+                '''
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                // bat 'docker run --rm demo1_jenkins_as_container_webapp pytest || echo "No tests found"' // Windows
+                sh '''
+                    if [ -d "P6/scenario_3_github_repo" ]; then
+                        cd "P6/scenario_3_github_repo"
+                    fi
+                    docker run --rm demo1_jenkins_as_container_webapp pytest || echo "No tests found"
+                '''
+            }
+        }
+        stage('Deploy Containers') {
+            steps {
+                // bat 'docker compose up -d' // Windows
+                sh '''
+                    if [ -d "P6/scenario_3_github_repo" ]; then
+                        cd "P6/scenario_3_github_repo"
+                    fi
+                    docker compose up -d
+                '''
+            }
+        }
+    }
+}

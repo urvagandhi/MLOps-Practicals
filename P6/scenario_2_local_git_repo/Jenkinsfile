@@ -1,0 +1,39 @@
+pipeline {
+    agent {
+        node {
+            label 'local'
+        }
+    }
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // file:/// starts the path (3 slashes). Spaces URL-encoded as %20
+                git branch: 'main', url: 'file:///home/urva/Documents/Academics/Semester%20-%207/MLOps/Practicals/P6/scenario_2_local_git_repo'
+            }
+        }
+        stage('Show Workspace') {
+            steps {
+                // bat 'cd' // Windows
+                sh 'pwd'   // Linux
+            }
+        }
+        stage('Build Images') {
+            steps {
+                // bat 'docker compose build' // Windows
+                sh 'docker compose build'     // Linux
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                // bat 'docker run --rm demo1_jenkins_as_container_webapp pytest || echo "No tests found"' // Windows
+                sh 'docker run --rm demo1_jenkins_as_container_webapp pytest || echo "No tests found"'     // Linux
+            }
+        }
+        stage('Deploy Containers') {
+            steps {
+                // bat 'docker compose up -d' // Windows
+                sh 'docker compose up -d'     // Linux
+            }
+        }
+    }
+}

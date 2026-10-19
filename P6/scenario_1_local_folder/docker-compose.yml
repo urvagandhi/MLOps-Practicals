@@ -1,0 +1,8 @@
+services:
+  webapp:
+    build: .
+    image: demo1_jenkins_as_container_webapp
+    container_name: cntwebapp_s1
+    ports:
+      - "8001:5000"
+    restart: always

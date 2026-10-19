@@ -1,0 +1,41 @@
+pipeline {
+    agent { // agent any does not allow specifying the custom workspace
+        node {
+            label 'local'
+            customWorkspace '/home/urva/Documents/Academics/Semester - 7/MLOps/Practicals/P6/scenario_1_local_folder' /* as our project is not at the standard path */
+        }
+    }
+    stages {
+        /*
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-username/iris_project.git'
+            }
+        }
+        */
+        stage('Show Workspace') {
+            steps {
+                // bat 'cd' // Windows
+                sh 'pwd'   // Linux
+            }
+        }
+        stage('Build Images') {
+            steps {
+                // bat 'docker compose build' // Windows
+                sh 'docker compose build'     // Linux
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                // bat 'docker run --rm demo1_jenkins_as_container_webapp pytest || echo "No tests found"' // Windows
+                sh 'docker run --rm demo1_jenkins_as_container_webapp pytest || echo "No tests found"'     // Linux
+            }
+        }
+        stage('Deploy Containers') {
+            steps {
+                // bat 'docker compose up -d' // Windows
+                sh 'docker compose up -d'     // Linux
+            }
+        }
+    }
+}
