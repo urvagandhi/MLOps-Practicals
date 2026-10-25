@@ -1,0 +1,37 @@
+groups:
+  - name: aggregation_and_alerts
+    interval: 15s
+    rules:
+      # Recording rule: CPU usage % (works with windows_exporter or node_exporter)
+      - record: system:cpu_usage_percent
+        expr: 100 - (avg(rate(windows_cpu_time_total{mode="idle"}[2m])) * 100) or 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100)
+
+      # Alert 1: High CPU
+      - alert: HighCPUUsage
+        expr: system:cpu_usage_percent > 85
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage has been above 85% for over 1 minute."
+
+      # Alert 2: WebApp slow
+      - alert: WebAppLatencyHigh
+        expr: rate(webapp_request_latency_seconds_sum[1m]) / rate(webapp_request_latency_seconds_count[1m]) > 2
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Webapp latency is high"
+          description: "Average response time is above 2 seconds."
+
+      # Alert 3: DBApp down
+      - alert: DBAppDown
+        expr: up{job="dbapp"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "DBApp is down"
+          description: "Prometheus cannot reach the DBApp metrics endpoint."
